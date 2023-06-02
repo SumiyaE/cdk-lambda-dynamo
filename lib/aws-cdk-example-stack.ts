@@ -14,8 +14,8 @@ export class AwsCdkExampleStack extends cdk.Stack {
     // const queue = new sqs.Queue(this, 'AwsCdkExampleQueue', {
     //   visibilityTimeout: cdk.Duration.seconds(300)
     // });
-    new NodejsFunction(this,"tsFunction",{
-      entry: "lib/helloworld.ts",
+    const func = new NodejsFunction(this,"tsFunction",{
+      entry: "lib/helloWorld.ts",
       runtime:Runtime.NODEJS_18_X
     })
   }
