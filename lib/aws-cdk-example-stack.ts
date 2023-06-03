@@ -15,11 +15,6 @@ export class AwsCdkExampleStack extends cdk.Stack {
     // const queue = new sqs.Queue(this, 'AwsCdkExampleQueue', {
     //   visibilityTimeout: cdk.Duration.seconds(300)
     // });
-    const func = new NodejsFunction(this,"tsFunction",{
-      entry: "lib/helloWorld.ts",
-      runtime:Runtime.NODEJS_18_X
-    })
-
     const itemTable = new Table(this, "itemTable", {
       partitionKey: {
         name: "pk",
@@ -27,6 +22,15 @@ export class AwsCdkExampleStack extends cdk.Stack {
       },
       // 以下を設定することでcdk destroyコマンド実行時にスタックを削除することができる。
       removalPolicy: cdk.RemovalPolicy.DESTROY
+    })
+
+    
+    const func = new NodejsFunction(this,"tsFunction",{
+      entry: "lib/helloWorld.ts",
+      runtime:Runtime.NODEJS_18_X,
+      environment: {
+        ITEM_TABLE_NAME: itemTable.tableName
+      }
     })
     // アクセス元のスタック名を指定し、引数にアクセス許可する対象のスタックを記述する
     itemTable.grantReadData(func)
