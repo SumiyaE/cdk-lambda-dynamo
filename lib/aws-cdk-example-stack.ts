@@ -1,4 +1,5 @@
 import * as cdk from 'aws-cdk-lib';
+import { AttributeType, Table } from 'aws-cdk-lib/aws-dynamodb';
 import { Runtime } from 'aws-cdk-lib/aws-lambda';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 import { Construct } from 'constructs';
@@ -17,6 +18,15 @@ export class AwsCdkExampleStack extends cdk.Stack {
     const func = new NodejsFunction(this,"tsFunction",{
       entry: "lib/helloWorld.ts",
       runtime:Runtime.NODEJS_18_X
+    })
+
+    const itemTable = new Table(this, "itemTable", {
+      partitionKey: {
+        name: "pk",
+        type: AttributeType.STRING,
+      },
+      // 以下を設定することでcdk destroyコマンド実行時にスタックを削除することができる。
+      removalPolicy: cdk.RemovalPolicy.DESTROY
     })
   }
 }
