@@ -1,6 +1,8 @@
 # lambda × apiGateway × DynamoDBプロジェクト
 以下のサイトを参考に、チュートリアルとして作成したリポジトリです。
 
+https://eh-career.com/engineerhub/entry/2023/04/27/093000
+
 ## プロジェクトの情報
 
 以下のコマンドを実行しプロジェクトを作成
