@@ -28,5 +28,7 @@ export class AwsCdkExampleStack extends cdk.Stack {
       // 以下を設定することでcdk destroyコマンド実行時にスタックを削除することができる。
       removalPolicy: cdk.RemovalPolicy.DESTROY
     })
+    // アクセス元のスタック名を指定し、引数にアクセス許可する対象のスタックを記述する
+    itemTable.grantReadData(func)
   }
 }

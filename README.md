@@ -28,6 +28,54 @@ $ tree -I node_modules --dirsfirst
 └── tsconfig.json
 ```
 
+## デプロイ
+以下コマンドでデプロイされているリソースとローカルに定義されているスタックの差分を確認することができる
+
+
+```shell
+$ npm run cdk diff       
+```
+
+<details>
+<summary>詳しい実行のサンプル</summary>
+
+```
+> aws-cdk-example@0.1.0 cdk
+> cdk --profile personal_develop diff
+
+Bundling asset AwsCdkExampleStack/tsFunction/Code/Stage...
+
+  cdk.out/bundling-temp-68870271ee22c076457d4bca0dbb48d9e9da5069868394504b096640753bab97/index.js  1.1kb
+
+⚡ Done in 11ms
+Stack AwsCdkExampleStack
+IAM Statement Changes
+┌───┬──────────────────┬────────┬─────────────────────────────────────────────────────────────┬──────────────────────────────────────────────────────────────┬───────────┐
+│   │ Resource         │ Effect │ Action                                                      │ Principal                                                    │ Condition │
+├───┼──────────────────┼────────┼─────────────────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────┼───────────┤
+│ + │ ${itemTable.Arn} │ Allow  │ dynamodb:BatchGetItem                                       │ AWS:${tsFunction/ServiceRole}                                │           │
+│   │                  │        │ dynamodb:ConditionCheckItem                                 │                                                              │           │
+│   │                  │        │ dynamodb:DescribeTable                                      │                                                              │           │
+│   │                  │        │ dynamodb:GetItem                                            │                                                              │           │
+│   │                  │        │ dynamodb:GetRecords                                         │                                                              │           │
+│   │                  │        │ dynamodb:GetShardIterator                                   │                                                              │           │
+│   │                  │        │ dynamodb:Query                                              │                                                              │           │
+│   │                  │        │ dynamodb:Scan                                               │                                                              │           │
+└───┴──────────────────┴────────┴─────────────────────────────────────────────────────────────┴──────────────────────────────────────────────────────────────┴───────────┘
+(NOTE: There may be security-related changes not in this list. See https://github.com/aws/aws-cdk/issues/1299)
+
+Resources
+[+] AWS::IAM::Policy tsFunction/ServiceRole/DefaultPolicy tsFunctionServiceRoleDefaultPolicy58AF27B8 
+[~] AWS::Lambda::Function tsFunction tsFunction16BFBC6C 
+ └─ [~] DependsOn
+     └─ @@ -1,3 +1,4 @@
+        [ ] [
+        [+]   "tsFunctionServiceRoleDefaultPolicy58AF27B8",
+        [ ]   "tsFunctionServiceRole74F0127B"
+        [ ] ]
+```
+
+</details>
 
 # Welcome to your CDK TypeScript project
 
